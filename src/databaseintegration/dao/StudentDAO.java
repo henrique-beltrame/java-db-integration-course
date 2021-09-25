@@ -14,7 +14,19 @@ public class StudentDAO extends GenericDAO<Student, String> {
 
     @Override
     public void create(Student entity) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(
+                    "INSERT INTO STUDENT VALUES (?, ?, ?)"
+            );
+            preparedStatement.setString(1, entity.getRegistration());
+            preparedStatement.setString(2, entity.getName());
+            preparedStatement.setInt(3, entity.getEntryYear());
+            preparedStatement.executeUpdate();
+            
+            closeStatement(preparedStatement);
+        } catch (Exception e) {
+            System.out.println("\nAn error ocurred while trying to save the studet's data\n");
+        }
     }
 
     @Override
@@ -35,9 +47,10 @@ public class StudentDAO extends GenericDAO<Student, String> {
                         resultSet.getInt("ENTRY_YEAR")
                 );
             }
-            closeStatement(resultSet.getStatement());
+            
+            closeStatement(preparedStatement);
         } catch (Exception e) {
-            System.out.println("\nAn error ocurred while trying to retrieve the studet\n");
+            System.out.println("\nAn error ocurred while trying to retrieve the studet's data\n");
         }
         
         return student;
@@ -59,9 +72,10 @@ public class StudentDAO extends GenericDAO<Student, String> {
                         resultSet.getInt("ENTRY_YEAR")
                 ));
             }
+            
             closeStatement(resultSet.getStatement());
         } catch (Exception e) {
-            System.out.println("\nAn error ocurred while trying to retrieve the studets\n");
+            System.out.println("\nAn error ocurred while trying to retrieve the studets' data\n");
         }
         
         return students;
@@ -69,12 +83,34 @@ public class StudentDAO extends GenericDAO<Student, String> {
 
     @Override
     public void update(Student entity) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(
+                    "UPDATE STUDENT SET NAME = ?, ENTRY_YEAR = ? WHERE REGISTRATION = ?"
+            );
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setInt(2, entity.getEntryYear());
+            preparedStatement.setString(3, entity.getRegistration());
+            preparedStatement.executeUpdate();
+            
+            closeStatement(preparedStatement);
+        } catch (Exception e) {
+            System.out.println("\nAn error ocurred while trying to update the studet's data\n");
+        }
     }
 
     @Override
     public void delete(String key) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(
+                    "DELETE FROM STUDENT WHERE REGISTRATION = ?"
+            );
+            preparedStatement.setString(1, key);
+            preparedStatement.executeUpdate();
+            
+            closeStatement(preparedStatement);
+        } catch (Exception e) {
+            System.out.println("\nAn error ocurred while trying to delete the studet's data\n");
+        }
     }
     
 }
