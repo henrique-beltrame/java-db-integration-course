@@ -9,8 +9,8 @@ import java.util.List;
 /**
  *
  * @author Henrique
- * @param <E> entity
- * @param <K> key
+ * @param <E> entity type
+ * @param <K> primary key type
  */
 public abstract class GenericDAO<E, K> {
 
