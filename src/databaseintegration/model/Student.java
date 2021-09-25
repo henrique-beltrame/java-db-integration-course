@@ -1,13 +1,32 @@
 package databaseintegration.model;
 
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 /**
  *
  * @author Henrique
  */
-public class Student {
+@Entity
+@Table(name = "STUDENT")
+@NamedQueries({
+    @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s")
+})
+public class Student implements Serializable {
 
+    @Id
+    @Basic(optional = false)
+    @Column(name = "REGISTRATION")
     private String registration;
+    @Column(name = "NAME")
     private String name;
+    @Column(name = "ENTRY_YEAR")
     private Integer entryYear;
 
     public Student() {

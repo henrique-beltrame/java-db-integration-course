@@ -112,5 +112,4 @@ public class StudentDAO extends GenericDAO<Student, String> {
             System.out.println("\nAn error ocurred while trying to delete the studet's data\n");
         }
     }
-    
 }
